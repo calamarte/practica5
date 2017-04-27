@@ -30,18 +30,26 @@ public class Token {
 
     // Torna un token de tipus "PAREN"
     static Token tokParen(char c) {
-        
-        return null;
+        Token t = new Token();
+        t.ttype = Toktype.PAREN;
+        t.tk = c;
+        return t;
     }
 
     // Mostra un token (conversió a String)
     public String toString() {
-        return "";
+        if (ttype == Toktype.NUMBER)return (value+"");
+        else return  (tk+"");
     }
 
     // Mètode equals. Comprova si dos objectes Token són iguals
     public boolean equals(Object o) {
-        return false;
+        Token t = (Token) o;
+        if (this.ttype == Toktype.NUMBER && t.ttype == Toktype.NUMBER ){
+            if (this.value == t.value)return true;
+            else return false;
+        }else if (this.tk == t.tk)return true;
+        else return false;
     }
 
     // A partir d'un String, torna una llista de tokens
