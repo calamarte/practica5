@@ -64,24 +64,20 @@ public class Token {
                 StringBuilder n = new StringBuilder();
                 n.append(expr.charAt(i));
 
-                for (int j = 1; j + i < expr.length(); j++) {
+                while (i+1 < expr.length()){
 
-                    if (expr.charAt(i + j) >= '0' && expr.charAt(i + j) <= '9') {
-                        n.append(expr.charAt(i + j));
-                    } else {
-                            i = (i + j)-1;
-                            break;
-                    }
+                    if (expr.charAt(i+1) >= '0' && expr.charAt(i+1) <= '9') {
+                        n.append(expr.charAt(i + 1));
+                        i++;
+                    }else break;
                 }
                 tokens.add(Token.tokNumber(Integer.parseInt(n.toString())));
                 continue;
             }
 
-            if (expr.charAt(i) == '(' || expr.charAt(i) == ')'){
-                tokens.add(Token.tokParen(expr.charAt(i)));
-            }else{
-                tokens.add(Token.tokOp(expr.charAt(i)));
-            }
+            if (expr.charAt(i) == '(' || expr.charAt(i) == ')')tokens.add(Token.tokParen(expr.charAt(i)));
+            else tokens.add(Token.tokOp(expr.charAt(i)));
+
 
         }
         return tokens.toArray(new Token[tokens.size()]);
