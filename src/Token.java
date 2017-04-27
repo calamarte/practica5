@@ -60,23 +60,26 @@ public class Token {
         List<Token> tokens = new ArrayList<>();
 
         for (int i = 0; i <expr.length() ; i++) {
-            if (expr.charAt(i) >= '0' && expr.charAt(i) <= '9'){
+            if (expr.charAt(i) >= '0' && expr.charAt(i) <= '9') {
                 StringBuilder n = new StringBuilder();
                 n.append(expr.charAt(i));
 
-                for (int j = 1; j+i < expr.length() ; j++) {
-                    if (expr.charAt(i+j) >= '0' && expr.charAt(i+j) <= '9'){
-                       n.append(expr.charAt(i+j));
-                    }else {
-                        i = i+j;
-                        break;
+                for (int j = 1; j + i < expr.length(); j++) {
+
+                    if (expr.charAt(i + j) >= '0' && expr.charAt(i + j) <= '9') {
+                        n.append(expr.charAt(i + j));
+                    } else {
+                            i = (i + j)-1;
+                            break;
                     }
                 }
                 tokens.add(Token.tokNumber(Integer.parseInt(n.toString())));
+                continue;
+            }
 
-            }else if (expr.charAt(i) == '(' || expr.charAt(i) == ')'){
+            if (expr.charAt(i) == '(' || expr.charAt(i) == ')'){
                 tokens.add(Token.tokParen(expr.charAt(i)));
-            }else {
+            }else{
                 tokens.add(Token.tokOp(expr.charAt(i)));
             }
 
