@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -45,10 +44,8 @@ public class Evaluator {
             }
         }
 
-        while (!pila.isEmpty()){
-            resultado.add(pila.pop());
-        }
-        System.out.println(Arrays.toString(resultado.toArray(new Token[resultado.size()])));
+        while (!pila.isEmpty())resultado.add(pila.pop());
+
         // Finalment, crida a calcRPN amb la nova llista de tokens i torna el resultat
         return calcRPN(resultado.toArray(new Token[resultado.size()]));
     }
