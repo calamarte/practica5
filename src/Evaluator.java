@@ -12,24 +12,31 @@ public class Evaluator {
         Queue<Token> resultado = new LinkedList<>();
 
         for (int i = 0; i < tokens.length; i++) {
+
+            //Al ser un entero se introduce en la cola
             if (tokens[i].getTtype() == Token.Toktype.NUMBER){
                 resultado.add(tokens[i]);
                 continue;
             }
 
+            //Al ser un operador entrara en la pila liberando otros operadores
+            //dependiendo de el orden de prioridad
             if (tokens[i].getTtype() == Token.Toktype.OP){
+                //Si la pila esta vacia se introduce siempre
                 if (pila.isEmpty()){
                     pila.push(tokens[i]);
                     continue;
                 }
 
+                //Si el que esta en la pila tiene menor prioridad se introduce
                 if (priority(pila.peek()) < priority(tokens[i])){
                     pila.push(tokens[i]);
                     continue;
                 }
 
+                //Si el que esta en la pila es de mayor prioridad expulsará a todos los que sean
+                //de menor prioridad de la pila y se introduce el operador
                 while (!pila.isEmpty() && priority(pila.peek()) >= priority(tokens[i]))resultado.add(pila.pop());
-
                 pila.push(tokens[i]);
                 continue;
             }

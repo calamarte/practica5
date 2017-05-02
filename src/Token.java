@@ -82,20 +82,23 @@ public class Token {
         }
         return tokens.toArray(new Token[tokens.size()]);
     }
+
+    //Devuelve el ttype del objeto
     public Toktype getTtype(){
         Toktype ttype = this.ttype;
         return ttype;
     }
 
+    //Devuelve el tk del objeto
     public char getTk(){
         char tk = this.tk;
         return tk;
     }
 
+    //Devuelve el value
     public int getValue(){
         int value = this.value;
         return value;
     }
-
 
 }
