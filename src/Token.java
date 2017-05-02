@@ -60,6 +60,7 @@ public class Token {
         List<Token> tokens = new ArrayList<>();
 
         for (int i = 0; i <expr.length() ; i++) {
+            if (expr.charAt(i) == ' ')continue;
             if (expr.charAt(i) >= '0' && expr.charAt(i) <= '9') {
                 StringBuilder n = new StringBuilder();
                 n.append(expr.charAt(i));
@@ -78,8 +79,14 @@ public class Token {
             if (expr.charAt(i) == '(' || expr.charAt(i) == ')')tokens.add(Token.tokParen(expr.charAt(i)));
             else tokens.add(Token.tokOp(expr.charAt(i)));
 
-
         }
         return tokens.toArray(new Token[tokens.size()]);
+    }
+    public Toktype getTtype(){
+        return this.ttype;
+    }
+
+    public char getTk(){
+        return this.tk;
     }
 }
