@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -28,7 +29,7 @@ public class Evaluator {
                     continue;
                 }
 
-                while (!pila.isEmpty() || priority(pila.peek()) >= priority(tokens[i]))resultado.add(pila.pop());
+                while (!pila.isEmpty() && priority(pila.peek()) >= priority(tokens[i]))resultado.add(pila.pop());
 
                 pila.push(tokens[i]);
                 continue;
@@ -42,15 +43,14 @@ public class Evaluator {
                     pila.pop();
                 }
             }
-
-            if (i == tokens.length-1){
-                while (!pila.isEmpty()){
-                    resultado.add(pila.pop());
-                }
-            }
         }
+
+        while (!pila.isEmpty()){
+            resultado.add(pila.pop());
+        }
+        System.out.println(Arrays.toString(resultado.toArray(new Token[resultado.size()])));
         // Finalment, crida a calcRPN amb la nova llista de tokens i torna el resultat
-        return calcRPN(resultado.toArray(new Token[resultado.size()]));
+        return 0;//resultado.toArray(new Token[resultado.size()]);
     }
 
     public static int calcRPN(Token[] list) {
