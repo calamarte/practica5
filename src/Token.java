@@ -83,10 +83,19 @@ public class Token {
         return tokens.toArray(new Token[tokens.size()]);
     }
     public Toktype getTtype(){
-        return this.ttype;
+        Toktype ttype = this.ttype;
+        return ttype;
     }
 
     public char getTk(){
-        return this.tk;
+        char tk = this.tk;
+        return tk;
     }
+
+    public int getValue(){
+        int value = this.value;
+        return value;
+    }
+
+
 }

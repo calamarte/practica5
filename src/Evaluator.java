@@ -54,13 +54,15 @@ public class Evaluator {
     }
 
     public static int calcRPN(Token[] list) {
+        LinkedList<Token> pila = new LinkedList<>();
         // Calcula el valor resultant d'avaluar la llista de tokens
         for (int i = 0; i < list.length; i++) {
 
-            if (list[i].getTtype() == Token.Toktype.NUMBER){}
+            if (list[i].getTtype() == Token.Toktype.NUMBER)pila.push(list[i]);
+            else pila.push(operar(pila.pop(),pila.pop(),list[i]));
         }
         
-        return 0;
+        return pila.pop().getValue();
         
     }
 
@@ -78,6 +80,17 @@ public class Evaluator {
             default: return 0;
         }
     }
+
+    private static Token operar(Token value2,Token value1,Token operator){
+        switch (operator.getTk()){
+            case '+': return Token.tokNumber(value1.getValue() + value2.getValue());
+            case '-': return Token.tokNumber(value1.getValue() - value2.getValue());
+            case '*': return Token.tokNumber(value1.getValue() * value2.getValue());
+            case '/': return Token.tokNumber(value1.getValue() / value2.getValue());
+            default: return null;
+        }
+    }
+
 
 
 }
