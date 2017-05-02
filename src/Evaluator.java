@@ -50,11 +50,16 @@ public class Evaluator {
         }
         System.out.println(Arrays.toString(resultado.toArray(new Token[resultado.size()])));
         // Finalment, crida a calcRPN amb la nova llista de tokens i torna el resultat
-        return 0;//resultado.toArray(new Token[resultado.size()]);
+        return calcRPN(resultado.toArray(new Token[resultado.size()]));
     }
 
     public static int calcRPN(Token[] list) {
         // Calcula el valor resultant d'avaluar la llista de tokens
+        for (int i = 0; i < list.length; i++) {
+
+            if (list[i].getTtype() == Token.Toktype.NUMBER){}
+        }
+        
         return 0;
         
     }
