@@ -21,7 +21,7 @@ public class Evaluator {
 
             //Al ser un operador entrara en la pila liberando otros operadores
             //dependiendo de el orden de prioridad
-            if (tokens[i].getTtype() == Token.Toktype.OP){
+            if (tokens[i].getTtype() == Token.Toktype.OP || tokens[i].getTtype() == Token.Toktype.OPUNITER){
                 //Si la pila esta vacia se introduce siempre
                 if (pila.isEmpty()){
                     pila.push(tokens[i]);
@@ -40,7 +40,7 @@ public class Evaluator {
                 pila.push(tokens[i]);
                 continue;
             }
-
+            //parentesis
             if (tokens[i].getTtype() == Token.Toktype.PAREN){
                 if (tokens[i].getTk() == '(')pila.push(tokens[i]);
                 else {
@@ -64,13 +64,15 @@ public class Evaluator {
 
             if (list[i].getTtype() == Token.Toktype.NUMBER)pila.push(list[i]);
             else if (priority(list[i]) <= 3)pila.push(operar(pila.pop(),pila.pop(),list[i]));
-            else pila.push(factorial(pila.pop()));
+            else if(priority(list[i]) == 4) pila.push(factorial(pila.pop()));
+            else pila.push(Token.tokNumber(pila.pop().getValue()*(-1)));
         }
 
         return pila.pop().getValue();
     }
 
     private static int priority(Token t){
+        if (t.getTtype() == Token.Toktype.OPUNITER)return 5;
         char signo = t.getTk();
 
         switch (signo) {
@@ -102,7 +104,6 @@ public class Evaluator {
         for (int i = value.getValue()-1; i >= 1; i--) resultado *= i;
         return Token.tokNumber(resultado);
     }
-
 
 
 }

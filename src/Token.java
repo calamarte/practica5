@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Token {
     enum Toktype {
-        NUMBER, OP, PAREN
+        NUMBER, OP, PAREN, OPUNITER
     }
 
     // Pensa a implementar els "getters" d'aquests atributs
@@ -35,6 +35,13 @@ public class Token {
     static Token tokParen(char c) {//mejorar if
         Token t = new Token();
         t.ttype = Toktype.PAREN;
+        t.tk = c;
+        return t;
+    }
+
+    static Token tokOpuniter(char c){
+        Token t = new Token();
+        t.ttype = Toktype.OPUNITER;
         t.tk = c;
         return t;
     }
@@ -77,7 +84,9 @@ public class Token {
             }
 
             if (expr.charAt(i) == '(' || expr.charAt(i) == ')')tokens.add(Token.tokParen(expr.charAt(i)));
-            else tokens.add(Token.tokOp(expr.charAt(i)));
+            else if((expr.charAt(i) == '-' && i == 0) || (expr.charAt(i) == '-' && (expr.charAt(i-1) == '(' || expr.charAt(i-1) == '+' || expr.charAt(i-1) == '-'))){
+            tokens.add(Token.tokOpuniter(expr.charAt(i)));
+            }else tokens.add(Token.tokOp(expr.charAt(i)));
 
         }
         return tokens.toArray(new Token[tokens.size()]);

@@ -81,10 +81,23 @@ public class EvaluatorTest {
     }
     @Test
     public void tests_factorial(){
-        assertEquals(6, Evaluator.calculate("!3"));
-        assertEquals(2, Evaluator.calculate("!2"));
-        assertEquals(24, Evaluator.calculate("!4"));
-        assertEquals(10, Evaluator.calculate("(1+1)^(1+1)+!3"));
-        assertEquals(112, Evaluator.calculate("10/2 + 5^2 * 4 + (2-1) + !3"));
+        assertEquals(6, Evaluator.calculate("3!"));
+        assertEquals(2, Evaluator.calculate("2!"));
+        assertEquals(24, Evaluator.calculate("4!"));
+        assertEquals(10, Evaluator.calculate("(1+1)^(1+1)+3!"));
+        assertEquals(112, Evaluator.calculate("10/2 + 5^2 * 4 + (2-1) + 3!"));
+        assertEquals(12, Evaluator.calculate("3! + 3!"));
+    }
+
+    @Test
+    public void tests_opUniter(){
+        assertEquals(-1, Evaluator.calculate("-1"));
+        assertEquals(-4, Evaluator.calculate("1+-5"));
+        assertEquals(-4, Evaluator.calculate("-2+(-2)"));
+        assertEquals(3, Evaluator.calculate("1--2"));
+        assertEquals(14, Evaluator.calculate("3! + 3! - (-2)"));
+        assertEquals(1, Evaluator.calculate("(-1)*(-1)"));
+        assertEquals(1, Evaluator.calculate("(-1)^2"));
+        assertEquals(4, Evaluator.calculate("-(-4)"));
     }
 }
