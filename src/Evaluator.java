@@ -63,7 +63,8 @@ public class Evaluator {
         for (int i = 0; i < list.length; i++) {
 
             if (list[i].getTtype() == Token.Toktype.NUMBER)pila.push(list[i]);
-            else pila.push(operar(pila.pop(),pila.pop(),list[i]));
+            else if (priority(list[i]) <= 3)pila.push(operar(pila.pop(),pila.pop(),list[i]));
+            else pila.push(factorial(pila.pop()));
         }
         
         return pila.pop().getValue();
@@ -81,6 +82,7 @@ public class Evaluator {
             case '*':
                 return 2;
             case '^':return 3;
+            case '!':return 4;
             default: return 0;
         }
     }
@@ -91,8 +93,19 @@ public class Evaluator {
             case '-': return Token.tokNumber(value1.getValue() - value2.getValue());
             case '*': return Token.tokNumber(value1.getValue() * value2.getValue());
             case '/': return Token.tokNumber(value1.getValue() / value2.getValue());
+            case '^': return Token.tokNumber((int) Math.pow((double) value1.getValue(),(double) value2.getValue()));
             default: return null;
         }
+    }
+
+    private static Token factorial(Token value){
+        int resultado = value.getValue();
+        int valor = value.getValue()-1;
+        while (valor >= 1){
+            resultado *= valor;
+            valor--;
+        }
+        return Token.tokNumber(resultado);
     }
 
 

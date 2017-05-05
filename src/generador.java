@@ -5,6 +5,6 @@ import java.util.Arrays;
  */
 public class generador {
     public static void main(String[] args) {
-        Evaluator.calculate("1+1*1-1");
+        Evaluator.calculate("1^1");
     }
 }

@@ -69,4 +69,22 @@ public class EvaluatorTest {
         assertEquals(-1, Evaluator.calculate("(((3-4)))"));
         assertEquals(-25, Evaluator.calculate("((5+34)*3-78+6)*1-(54+65/3+7-1000/(100-20))"));
     }
+    @Test
+    public void tests_exponentes(){
+        assertEquals(1, Evaluator.calculate("1^1"));
+        assertEquals(1, Evaluator.calculate("1^2"));
+        assertEquals(2, Evaluator.calculate("2^1"));
+        assertEquals(25, Evaluator.calculate("5^2"));
+        assertEquals(30, Evaluator.calculate("10/2 + 5^2"));
+        assertEquals(4, Evaluator.calculate("(1+1)^2"));
+        assertEquals(4, Evaluator.calculate("(1+1)^(1+1)"));
+    }
+    @Test
+    public void tests_factorial(){
+        assertEquals(6, Evaluator.calculate("!3"));
+        assertEquals(2, Evaluator.calculate("!2"));
+        assertEquals(24, Evaluator.calculate("!4"));
+        assertEquals(10, Evaluator.calculate("(1+1)^(1+1)+!3"));
+        assertEquals(112, Evaluator.calculate("10/2 + 5^2 * 4 + (2-1) + !3"));
+    }
 }
