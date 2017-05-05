@@ -66,9 +66,8 @@ public class Evaluator {
             else if (priority(list[i]) <= 3)pila.push(operar(pila.pop(),pila.pop(),list[i]));
             else pila.push(factorial(pila.pop()));
         }
-        
+
         return pila.pop().getValue();
-        
     }
 
     private static int priority(Token t){
@@ -100,11 +99,7 @@ public class Evaluator {
 
     private static Token factorial(Token value){
         int resultado = value.getValue();
-        int valor = value.getValue()-1;
-        while (valor >= 1){
-            resultado *= valor;
-            valor--;
-        }
+        for (int i = value.getValue()-1; i >= 1; i--) resultado *= i;
         return Token.tokNumber(resultado);
     }
 
