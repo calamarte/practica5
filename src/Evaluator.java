@@ -68,7 +68,6 @@ public class Evaluator {
             //para así poder realizar las diferentes operaciones
             if (list[i].getTtype() == Token.Toktype.NUMBER)pila.push(list[i]);
             else if (priority(list[i]) <= 3)pila.push(operar(pila.pop(),pila.pop(),list[i]));
-            else if(priority(list[i]) == 4) pila.push(operar(pila.pop(),list[i]));
             else pila.push(operar(pila.pop(),list[i]));
         }
 
