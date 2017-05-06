@@ -39,6 +39,7 @@ public class Token {
         return t;
     }
 
+    //Torna un token de tipus "OPUNITER"
     static Token tokOpuniter(char c){
         Token t = new Token();
         t.ttype = Toktype.OPUNITER;
@@ -65,13 +66,18 @@ public class Token {
     // A partir d'un String, torna una llista de tokens
     public static Token[] getTokens(String expr) {
         List<Token> tokens = new ArrayList<>();
-
+        //Hay 4 tipos de tokens diferentes por ello lo que este en "expr" se ha de asignar
+        //cada uno a el token que le corresponda
         for (int i = 0; i <expr.length() ; i++) {
+            //Ignora los espacios
             if (expr.charAt(i) == ' ')continue;
+            //Mira si es un numero
             if (expr.charAt(i) >= '0' && expr.charAt(i) <= '9') {
                 StringBuilder n = new StringBuilder();
                 n.append(expr.charAt(i));
 
+                //Los numeros pueden estar compuestos por más de un caracter por ello se mira si el siguiente
+                //char pertenece al numero
                 while (i+1 < expr.length()){
 
                     if (expr.charAt(i+1) >= '0' && expr.charAt(i+1) <= '9') {
@@ -83,12 +89,15 @@ public class Token {
                 continue;
             }
 
+            //comprueba si es un parentesis, en su defecto si es un signo unitario especial "-",
+            // en su defecto se considera un signo normal
             if (expr.charAt(i) == '(' || expr.charAt(i) == ')')tokens.add(Token.tokParen(expr.charAt(i)));
             else if((expr.charAt(i) == '-' && i == 0) || (expr.charAt(i) == '-' && (expr.charAt(i-1) == '(' || expr.charAt(i-1) == '+' || expr.charAt(i-1) == '-'))){
             tokens.add(Token.tokOpuniter(expr.charAt(i)));
             }else tokens.add(Token.tokOp(expr.charAt(i)));
 
         }
+        //Devuelve la lista de tokens en forma de array
         return tokens.toArray(new Token[tokens.size()]);
     }
 

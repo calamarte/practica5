@@ -3,7 +3,8 @@ import java.util.Queue;
 
 public class Evaluator {
 
-
+    //Se encarga de cambiar el orden de los tokens para formar expresiones
+    //en polaca inversa y luego calcular el resultado
     public static int calculate(String expr) {
         // Convertim l'string d'entrada en una llista de tokens
         Token[] tokens = Token.getTokens(expr);
@@ -40,7 +41,8 @@ public class Evaluator {
                 pila.push(tokens[i]);
                 continue;
             }
-            //parentesis
+            //Si es un parentesis se mira si es el que abre para introducirlo en la pila
+            //o si es el que cierra para sacar lo que se incluya entre ellos dos.
             if (tokens[i].getTtype() == Token.Toktype.PAREN){
                 if (tokens[i].getTk() == '(')pila.push(tokens[i]);
                 else {
@@ -57,20 +59,23 @@ public class Evaluator {
         return calcRPN(resultado.toArray(new Token[resultado.size()]));
     }
 
+    //Se encarga de resolver operciones en polaca inversa
     public static int calcRPN(Token[] list) {
         LinkedList<Token> pila = new LinkedList<>();
         // Calcula el valor resultant d'avaluar la llista de tokens
         for (int i = 0; i < list.length; i++) {
-
+            //Se analiza cada token del array para averiguar de que tipo son
+            //para así poder realizar las diferentes operaciones
             if (list[i].getTtype() == Token.Toktype.NUMBER)pila.push(list[i]);
             else if (priority(list[i]) <= 3)pila.push(operar(pila.pop(),pila.pop(),list[i]));
-            else if(priority(list[i]) == 4) pila.push(factorial(pila.pop()));
-            else pila.push(Token.tokNumber(pila.pop().getValue()*(-1)));
+            else if(priority(list[i]) == 4) pila.push(operar(pila.pop(),list[i]));
+            else pila.push(operar(pila.pop(),list[i]));
         }
 
         return pila.pop().getValue();
     }
 
+    //Determina la prioridad de un token que se un operador
     private static int priority(Token t){
         if (t.getTtype() == Token.Toktype.OPUNITER)return 5;
         char signo = t.getTk();
@@ -88,7 +93,10 @@ public class Evaluator {
         }
     }
 
+    //Hace operaciones que necesitan de 2 valores
     private static Token operar(Token value2,Token value1,Token operator){
+        //Es un switch que devuelde el resultado de 5 posibles operación entre 2 valores
+        //definidas por el token "operator"
         switch (operator.getTk()){
             case '+': return Token.tokNumber(value1.getValue() + value2.getValue());
             case '-': return Token.tokNumber(value1.getValue() - value2.getValue());
@@ -99,10 +107,16 @@ public class Evaluator {
         }
     }
 
-    private static Token factorial(Token value){
-        int resultado = value.getValue();
-        for (int i = value.getValue()-1; i >= 1; i--) resultado *= i;
-        return Token.tokNumber(resultado);
+    //Hace operaciones que necesitan de un valor
+    private static Token operar(Token value,Token operator){
+        //Realiza las 2 posibles operaciones que requieren solo de un valor para
+        //llevarse a cabo
+        if (operator.getTk() == '!') {
+            int resultado = value.getValue();
+            for (int i = value.getValue() - 1; i >= 1; i--) resultado *= i;
+            return Token.tokNumber(resultado);
+        }
+        else return Token.tokNumber(value.getValue()*(-1));
     }
 
 
